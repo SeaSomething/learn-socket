@@ -25,9 +25,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/board', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'))
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 server.listen(9000, () => {
-    console.log("This app listening on port 9000!");
+    console.log("Server run localhost:9000");
 })
