@@ -38,7 +38,7 @@
             event.preventDefault()
             if (message.value) {
                 socket.emit('messageSomething', {
-                    name: name.value ? name.value : 'Anonymous',
+                    name: name.value,
                     message: message.value,
                     timmer: new Date().toLocaleTimeString()
                 })
