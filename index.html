@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Learning Socket.io</h1>
+
+        <div class="board-message">
+            <div class="message">
+                <p class="user-layout">From: Default <span>9:15pm</span></p>
+                <p class="message-layout">Example you can say anyting !</p>
+            </div>
+        </div>
+
+        <form id="form" class="board-form">
+            <input id="name" type="text" autocomplete="off"/>
+            <input id="message" type="text" autocomplete="off" placeholder="Message"/>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        
+        const dataForm = document.getElementById('form')
+        const name = document.getElementById('name')
+        const message = document.getElementById('message')
+
+        dataForm.addEventListener('submit', (event) => {
+            event.preventDefault()
+            if (message.value) {
+                socket.emit('messageSomething', {
+                    name: name.value ? name.value : 'Anonymous',
+                    message: message.value,
+                    timmer: new Date().toLocaleTimeString()
+                })
+                message.value = ''
+            }
+        })
+
+        socket.on('messageSomething', (data) => {
+            const messageElement = document.createElement('div')
+            messageElement.classList.add('message')
+            messageElement.innerHTML = `<p class="user-layout">${data.name}<span>${data.timmer}</span></p><p class="text-layout">${data.message}</p>`
+            document.querySelector('.board-message').appendChild(messageElement)
+        })
+    </script>
+</body>
+</html>
