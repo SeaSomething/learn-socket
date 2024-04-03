@@ -9,13 +9,105 @@
 
 <style>
     body {
-        background-color:whitesmoke;
+        display: flex;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
     .container {
         display: block;
         width: 100%;
         text-align: center;
+        margin-top: 42px;
+        padding-left: 20%;
+        padding-right: 20%;
     }
+
+    .title {
+        display: block;
+        font-size: 64px;
+        font-family:Arial, Helvetica, sans-serif;
+        background: linear-gradient(
+            to right,
+            #7953cd 20%,
+            #00affa 30%,
+            #0190cd 70%,
+            #764ada 80%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+        background-size: 500% auto;
+        animation: textShine 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes textShine {
+        0% {
+            background-position: 0% 50%;
+        }
+        100% {
+            background-position: 100% 50%;
+        }
+    }
+
+    .board-message {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        text-align: left;
+        height: 100%;
+        max-height: 644px;
+        padding: 10px 20px;
+        border-radius: 16px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        overflow: auto;
+        background-color:whitesmoke;
+    }
+
+    .board-message::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .board-message::-webkit-scrollbar-thumb {
+        background-color: #e7e7e7;
+        border-radius: 20px;
+    }
+    
+    .message {
+        border: 1px solid #e7e7e7;
+        border-radius: 8px;
+        margin-top: 8px;
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 12px -6px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .user-layout {
+        font-size: 15px;
+    }
+
+    .message-layout {
+        font-size: 12px;
+    }
+
+    .board-form {
+        margin-top: 32px;
+    }
+
 </style>
 
 <body>
