@@ -27,6 +27,7 @@
             background-position: 0% 50%;
         }
     }
+
     .container {
         display: block;
         width: 100%;
@@ -76,6 +77,8 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
         overflow: auto;
         background-color:whitesmoke;
+        filter: invert(0.9);
+        opacity: 0.9;
     }
 
     .board-message::-webkit-scrollbar {
@@ -106,6 +109,44 @@
 
     .board-form {
         margin-top: 32px;
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        padding: 0 15px;
+    }
+    
+    input[type=text] {
+        height: 35px;
+        border: 1px solid #e7e7e7;
+        border-radius: 8px;
+        outline: none;
+        width: 100%;
+        margin-right: 8px;
+        padding: 0px 8px;
+        filter: invert(0.9);
+        opacity: 0.9;
+    }
+
+    input[type=text]:focus {
+        border: 1px solid #00affa;
+        border-radius: 8px;
+    }
+
+    button[type=submit] {
+        width: 200px;
+        color: #ffffff;
+        border-radius: 8px;
+        background-color: #58f4d0;
+        border: 1px solid #23d5ab;
+        font-size: 18px;
+        font-weight: 500;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button[type=submit]:hover {
+        cursor: pointer;
+        background-color: #0eecb8;
     }
 
 </style>
@@ -122,8 +163,8 @@
         </div>
 
         <form id="form" class="board-form">
-            <input id="name" type="text" autocomplete="off"/>
-            <input id="message" type="text" autocomplete="off" placeholder="Message"/>
+            <input id="name" class="inputname" type="text" autocomplete="off"/>
+            <input id="message" class="inputmessage" type="text" autocomplete="off" placeholder="Message"/>
             <button type="submit">Send</button>
         </form>
     </div>
@@ -139,10 +180,14 @@
         dataForm.addEventListener('submit', (event) => {
             event.preventDefault()
             if (message.value) {
+                var currentTime = new Date();
+                var hours = currentTime.getHours();
+                var minutes = currentTime.getMinutes();
+                var formattedTime = hours + ":" + minutes;
                 socket.emit('messageSomething', {
                     name: name.value ? name.value : 'Anonymous',
                     message: message.value,
-                    timmer: new Date().toLocaleTimeString()
+                    timmer: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
                 })
                 message.value = ''
             }
@@ -151,7 +196,7 @@
         socket.on('messageSomething', (data) => {
             const messageElement = document.createElement('div')
             messageElement.classList.add('message')
-            messageElement.innerHTML = `<p class="user-layout">${data.name}<span>${data.timmer}</span></p><p class="text-layout">${data.message}</p>`
+            messageElement.innerHTML = `<p class="user-layout">${data.name} <span>${data.timmer}</span></p><p class="text-layout">${data.message}</p>`
             document.querySelector('.board-message').appendChild(messageElement)
         })
     </script>
